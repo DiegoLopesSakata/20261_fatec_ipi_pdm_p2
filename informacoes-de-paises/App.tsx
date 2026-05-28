@@ -13,7 +13,7 @@ export default function App() {
   const [nomeComum, setNomeComum] = useState('');
   const [nomeOficial, setNomeOficial] = useState('');
   const [nomeRusso, setNomeRusso] = useState('');
-  const [foto, setFoto] = useState('');
+  const [mapa, setMapa] = useState('');
   const [bandeira, setBandeira] = useState('');
   const [exibicao, setExibicao] = useState('');
 
@@ -25,7 +25,7 @@ export default function App() {
     setNomeComum(resultado[0].name.common);
     setNomeOficial(resultado[0].name.official);
     setNomeRusso(resultado[0].translations.rus.common);
-    setFoto(resultado[0].maps.openStreetMaps);
+    setMapa(resultado[0].maps.openStreetMaps);
     setExibicao('pais');
   };
 
@@ -42,7 +42,7 @@ export default function App() {
   return (
     <View style={styles.container}>
       <View style={styles.div}>
-        <Text style={styles.title}>BUSQUE POR PAÍSES</Text>
+        <Text style={styles.title}>INFORMAÇÕES DOS PAÍSES</Text>
         <TextInput
           style={styles.input}
           placeholder="Digite o nome de um país"
@@ -50,32 +50,37 @@ export default function App() {
           onChangeText={setNome}
         />
         <Pressable style={styles.button} onPress={BuscaNome}>
-          <Text style={styles.textButton}>BUSCAR</Text>
+          <Text style={styles.textButton}>BUSCAR POR PAÍS</Text>
         </Pressable>
         <Pressable style={styles.button} onPress={BuscaCapital}>
-          <Text style={styles.textButton}>BUSCAR POR CAPITAL DO PAÍS</Text>
+          <Text style={styles.textButton}>BUSCAR POR CAPITAL</Text>
         </Pressable>
         {exibicao === 'pais' && (
-          <View style={styles.div}>
+          <View style={styles.resultDiv}>
             <Text style={styles.title}>RESULTADO</Text>
-            <View style={styles.resultDiv}>
-              <Text style={styles.label}>Nome comum: {nomeComum}</Text>
-              <Text style={styles.label}>Nome oficial: {nomeOficial}</Text>
-              <Text style={styles.label}>Nome em russo: {nomeRusso}</Text>
-              <Text style={styles.label}>Foto: {foto}</Text>
+            <View style={styles.infoDiv}>
+              <Text style={styles.label}>Nome comum:</Text>
+              <Text style={styles.value}>{nomeComum}</Text>
+              <Text style={styles.label}>Nome oficial:</Text>
+              <Text style={styles.value}>{nomeOficial}</Text>
+              <Text style={styles.label}>Nome em russo:</Text>
+              <Text style={styles.value}>{nomeRusso}</Text>
+              <Text style={styles.label}>Mapa:</Text>
+              <Text style={styles.value}>{mapa}</Text>
             </View>
           </View>
         )}
         {exibicao === 'capital' && (
-          <View style={styles.div}>
+          <View style={styles.resultDiv}>
             <Text style={styles.title}>RESULTADO</Text>
-            <View style={styles.resultDiv}>
-              <Text style={styles.label}>Nome oficial: {nomeOficial}</Text>
+            <View style={styles.infoDiv}>
+              <Text style={styles.label}>Nome oficial:</Text>
+              <Text style={styles.value}>{nomeOficial}</Text>
               <Text style={styles.label}>Bandeira:</Text>
               {bandeira ? (
                 <Image source={{uri: bandeira}} style={{width: 200, height: 100}} />
               ) : (
-                <Text style={styles.label}>A bandeira não está disponível</Text>
+                <Text style={styles.value}>A bandeira não está disponível</Text>
               )}
             </View>
           </View>
@@ -93,8 +98,7 @@ const styles = StyleSheet.create({
   },
   div: {
     flex: 1,
-    width: '80%',
-    marginVertical: 30,
+    width: '100%',
     padding: 20,
     backgroundColor: '#a459eb63',
     borderWidth: 3,
@@ -125,13 +129,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderWidth: 3,
     marginTop: 10,
-    width: '50%'
+    width: '70%'
   },
   textButton: {
     fontWeight: 'bold',
     fontSize: 18
   },
-  resultDiv: {
+  infoDiv: {
     flex: 1,
     width: '80%',
     marginTop: 5,
@@ -143,5 +147,20 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: 'bold',
     marginBottom: 5
+  },
+  value: {
+    fontSize: 16,
+    marginBottom: 5
+  },
+  resultDiv: {
+    flex: 1,
+    width: '100%',
+    padding: 20,
+    marginVertical: 30,
+    backgroundColor: '#a459eb63',
+    borderWidth: 3,
+    borderRadius: 15,
+    alignItems: 'center',
+    justifyContent: 'center'
   }
 });
