@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState } from 'react'
 import {
   Image,
   Pressable,
@@ -6,38 +6,38 @@ import {
   Text,
   TextInput,
   View,
-} from 'react-native';
+} from 'react-native'
 
 export default function App() {
-  const [nome, setNome] = useState('');
-  const [nomeComum, setNomeComum] = useState('');
-  const [nomeOficial, setNomeOficial] = useState('');
-  const [nomeRusso, setNomeRusso] = useState('');
-  const [mapa, setMapa] = useState('');
-  const [bandeira, setBandeira] = useState('');
-  const [exibicao, setExibicao] = useState('');
+  const [nome, setNome] = useState('')
+  const [nomeComum, setNomeComum] = useState('')
+  const [nomeOficial, setNomeOficial] = useState('')
+  const [nomeRusso, setNomeRusso] = useState('')
+  const [mapa, setMapa] = useState('')
+  const [bandeira, setBandeira] = useState('')
+  const [exibicao, setExibicao] = useState('')
 
   const BuscaNome = async () => {
     const resposta = await fetch(
       `https://restcountries.com/v3.1/name/${nome}`
-    );
-    const resultado = await resposta.json();
-    setNomeComum(resultado[0].name.common);
-    setNomeOficial(resultado[0].name.official);
-    setNomeRusso(resultado[0].translations.rus.common);
-    setMapa(resultado[0].maps.openStreetMaps);
-    setExibicao('pais');
-  };
+    )
+    const resultado = await resposta.json()
+    setNomeComum(resultado[0].name.common)
+    setNomeOficial(resultado[0].name.official)
+    setNomeRusso(resultado[0].translations.rus.common)
+    setMapa(resultado[0].maps.openStreetMaps)
+    setExibicao('pais')
+  }
 
   const BuscaCapital = async () => {
     const resposta = await fetch(
       `https://restcountries.com/v3.1/capital/${nome}`
-    );
-    const resultado = await resposta.json();
-    setNomeOficial(resultado[0].name.official);
-    setBandeira(resultado[0].flags?.png || '');
-    setExibicao('capital');
-  };
+    )
+    const resultado = await resposta.json()
+    setNomeOficial(resultado[0].name.official)
+    setBandeira(resultado[0].flags.png)
+    setExibicao('capital')
+  }
 
   return (
     <View style={styles.container}>
@@ -77,17 +77,13 @@ export default function App() {
               <Text style={styles.label}>Nome oficial:</Text>
               <Text style={styles.value}>{nomeOficial}</Text>
               <Text style={styles.label}>Bandeira:</Text>
-              {bandeira ? (
-                <Image source={{uri: bandeira}} style={{width: 200, height: 100}} />
-              ) : (
-                <Text style={styles.value}>A bandeira não está disponível</Text>
-              )}
+              <Image source={{uri: bandeira}} style={{width: 250, height: 150}} />
             </View>
           </View>
         )}
       </View>
     </View>
-  );
+  )
 }
 
 const styles = StyleSheet.create({
@@ -163,4 +159,4 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center'
   }
-});
+})
